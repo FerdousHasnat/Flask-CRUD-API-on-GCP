@@ -1,0 +1,203 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Flask CRUD API",
+      "description": "API documentation for the Flask CRUD application",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://127.0.0.1:5000",
+        "description": "Local development server"
+      }
+    ],
+    "paths": {
+      "/users": {
+        "get": {
+          "summary": "Get all users or filter by name/email",
+          "parameters": [
+            {
+              "name": "name",
+              "in": "query",
+              "description": "Filter users by name",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "email",
+              "in": "query",
+              "description": "Filter users by email",
+              "required": false,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "A list of users",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Create a new user",
+          "requestBody": {
+            "description": "User object that needs to be created",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "User created successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/users/{id}": {
+        "get": {
+          "summary": "Get a user by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the user to retrieve",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "User not found"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a user by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the user to update",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Updated user object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "User updated successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input"
+            },
+            "404": {
+              "description": "User not found"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete a user by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the user to delete",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User deleted successfully"
+            },
+            "404": {
+              "description": "User not found"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 1
+            },
+            "name": {
+              "type": "string",
+              "example": "John Doe"
+            },
+            "email": {
+              "type": "string",
+              "example": "john.doe@example.com"
+            }
+          }
+        }
+      }
+    }
+  }
+  
